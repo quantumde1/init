@@ -18,11 +18,12 @@ class NotEnoughException : Exception {
 }
 
 void help() {
-	writeln("Init for NNY OS");
+	writeln("SystemDJ Init");
 	writeln("For add service to autostart, run init enable <service>");
 	writeln("For start service, run init start <service>");
 	writeln("For remove service from autostart, run init disable <service>");
 	writeln("For journal run init journal");
+	writeln("For clear journal, run clearjr");
 }
 
 void main(string[] args) {
@@ -47,7 +48,11 @@ void main(string[] args) {
 	if (args[1] == "journal") {
 		read_log();
 	}
+	if (args[1] == "clearjr") {
+		clear_log();
+	}
 	if (args[1] == "autorun") {
-		exec_all();
+		pid_check();
+		write_services();
 	}
 }

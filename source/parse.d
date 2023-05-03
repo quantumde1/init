@@ -6,6 +6,8 @@ import std.file;
 import std.utf;
 import std.process;
 import std.conv;
+import std.datetime;
+import core.time;
 
 void parse_json(string filename) {
 	string[4] status;
@@ -29,7 +31,10 @@ void parse_json(string filename) {
 				writeln(status[1], " Error when starting process ", name);
 				writeln(status[3], " Count of tries is ", x);
 				writeln(status[3], " For logs, run init journal");
-				std.file.write("/var/log/init/log", ps_log);
+				SysTime dt = Clock.currTime();
+				append("/var/log/init/log", status[3]~" service is "~filename~"\n");
+				append("/var/log/init/log", status[3]~" "~dt.toString()~"\n");
+				append("/var/log/init/log", ps_log~"\n");
 			}
 		}
 	}
