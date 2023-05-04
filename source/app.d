@@ -10,6 +10,7 @@ import services.start;
 import services.disable;
 import services.logging;
 import services.autorun;
+import services.stop;
 
 class NotEnoughException : Exception {
 	this(string msg, string file = __FILE__, size_t line = __LINE__) {
@@ -17,7 +18,7 @@ class NotEnoughException : Exception {
 	}
 }
 
-void help() {
+void help() @safe {
 	writeln("SystemDJ Init");
 	writeln("For add service to autostart, run init enable <service>");
 	writeln("For start service, run init start <service>");
@@ -40,7 +41,7 @@ void main(string[] args) {
 		help();
 	}
 	if (args[1] == "stop") {
-		writeln("Not implemented");
+		kill_process(args[2]);
 	}
 	if (args[1] == "disable") {
 		disable(args[2]);

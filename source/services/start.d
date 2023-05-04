@@ -13,7 +13,7 @@ void start(string service) {
 	status[0] = "[\033[0;32m  OK  \033[0m]";
 	status[1] = "[\033[0;31mFAILED\033[0m]";
 	if (path.exists) {
-		parse_json(path);
+		path.parse_json;
 	}
 	else {
 		writeln(status[1]," No such file or directory");

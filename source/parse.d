@@ -9,7 +9,7 @@ import std.conv;
 import std.datetime;
 import core.time;
 
-void parse_json(string filename) {
+void parse_json(string filename) @safe {
 	string[4] status;
 	status[0] = "[\033[0;32m  OK  \033[0m]";
 	status[1] = "[\033[0;31mFAILED\033[0m]";

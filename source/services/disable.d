@@ -7,7 +7,7 @@ import std.utf;
 import std.process;
 import std.conv;
 
-void disable(string service) {
+void disable(string service) @safe {
     string[4] status;
 	status[0] = "[\033[0;32m  OK  \033[0m]";
 	status[1] = "[\033[0;31mFAILED\033[0m]";

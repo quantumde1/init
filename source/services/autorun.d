@@ -12,7 +12,7 @@ void exec_all() {
     auto files = dirEntries("/etc/init/enabled/", SpanMode.shallow);
 }
 
-int pid_check() {
+int pid_check() @safe {
     auto pid = thisProcessID();
     auto content = readText("/etc/init/conf/name.json");
 	JSONValue j = parseJSON(content);
