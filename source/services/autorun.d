@@ -7,14 +7,16 @@ import std.stdio;
 import std.json;
 import std.conv;
 import std.algorithm;
+import parse;
 
-void exec_all() {
-    auto files = dirEntries("/etc/init/enabled/", SpanMode.shallow);
+void exec_all(string services) {
+    writeln("[\033[0;36m INFO \033[0m]", " Starting services...");
+    executeShell("/etc/init/enabled/autostart.sh");
 }
 
 int pid_check() @safe {
     auto pid = thisProcessID();
-    auto content = readText("/etc/init/conf/name.json");
+    auto content = readText("/etc/init/conf/main.json");
 	JSONValue j = parseJSON(content);
 	auto distname = j["name"].str;
     auto pid_stat = 0;
@@ -23,7 +25,7 @@ int pid_check() @safe {
         pid_stat = 0;
     }
     else {
-        writeln("[\033[0;36m INFO \033[0m]", " OS Name is ", distname);
+        writeln("[\033[0;36m INFO \033[0m]", " System name is ", distname);
         pid_stat = 1;
     }
     return pid_stat;
@@ -31,7 +33,5 @@ int pid_check() @safe {
 
 void write_services() {
     auto files = dirEntries("/etc/init/enabled/", SpanMode.shallow);
-    auto filesstr = to!string(files);
-    auto toBeRemoved = "[]\"\"";
-    writeln("[\033[0;36m INFO \033[0m]", " Services for autorun: ", filesstr);
+    writeln("[\033[0;36m INFO \033[0m]", " Services for autorun: ", files);
 }

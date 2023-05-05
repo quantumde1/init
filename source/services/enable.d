@@ -14,11 +14,17 @@ void enable(string service) @safe {
 	status[2] = "[\033[0;33m WAIT \033[0m]";
 	status[3] = "[\033[0;36m INFO \033[0m]";
 	writeln(status[3], " Enabling service ", service);
-	symlink("/etc/init/disabled/"~service~".json", "/etc/init/enabled/"~service~".json");
-	if ("/etc/init/enabled/"~service~".json".exists) {
-		writeln(status[0], " Successfully enabled ", service);
+	if ("/etc/init/disabled"~service~".json".exists) {
+		std.file.write("/etc/init/enabled/autostart.sh", service~"\n");
+		symlink("/etc/init/disabled/"~service~".json", "/etc/init/enabled/"~service~".json");
+		if ("/etc/init/enabled/"~service~".json".exists) {
+			writeln(status[0], " Successfully enabled ", service);
+		}
+		else if (!"/etc/init/enabled/"~service~".json".exists) {
+			writeln(status[1], " Failed to enable ", service);
+		}
 	}
-	else if (!"/etc/init/enabled/"~service~".json".exists) {
-		writeln(status[1], " Failed to enable ", service);
+	else {
+		writeln(status[1], " No such file or directory");
 	}
 }

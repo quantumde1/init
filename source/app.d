@@ -11,6 +11,8 @@ import services.disable;
 import services.logging;
 import services.autorun;
 import services.stop;
+import services.status;
+import configure;
 
 class NotEnoughException : Exception {
 	this(string msg, string file = __FILE__, size_t line = __LINE__) {
@@ -55,5 +57,12 @@ void main(string[] args) {
 	if (args[1] == "autorun") {
 		pid_check();
 		write_services();
+		exec_all("*.json");
+	}
+	if (args[1] == "status") {
+		get_process_status(args[2]);
+	}
+	if (args[1] == "conf") {
+		reconfigure_init;
 	}
 }
