@@ -7,11 +7,14 @@ import std.stdio;
 import std.json;
 import std.conv;
 import std.algorithm;
+import std.range;
+import std.format;
 import parse;
 
-void exec_all(string services) {
+void exec_all() {
     writeln("[\033[0;36m INFO \033[0m]", " Starting services...");
-    executeShell("/etc/init/enabled/autostart.sh");
+    auto ps = executeShell("/etc/init/enabled/autostart.sh");
+    writeln(ps.output);
 }
 
 int pid_check() @safe {
@@ -33,5 +36,6 @@ int pid_check() @safe {
 
 void write_services() {
     auto files = dirEntries("/etc/init/enabled/", SpanMode.shallow);
-    writeln("[\033[0;36m INFO \033[0m]", " Services for autorun: ", files);
+    auto fsec = files.to!string;
+    writeln("[\033[0;36m INFO \033[0m]", " Services for autorun: ", fsec);
 }

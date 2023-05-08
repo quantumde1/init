@@ -57,7 +57,7 @@ void main(string[] args) {
 	if (args[1] == "autorun") {
 		pid_check();
 		write_services();
-		exec_all("*.json");
+		exec_all();
 	}
 	if (args[1] == "status") {
 		get_process_status(args[2]);
